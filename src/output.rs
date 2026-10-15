@@ -33,10 +33,12 @@ impl Target {
                 let stdout = io::stdout();
                 let mut stdout = stdout.lock();
 
-                stdout.write_all(png)?;
-                stdout.flush()?;
-
-                Ok(())
+                match stdout.write_all(png).and_then(|()| stdout.flush()) {
+                    // A reader that closes the pipe early, such as `head`, got
+                    // what it wanted.
+                    Err(error) if error.kind() == io::ErrorKind::BrokenPipe => Ok(()),
+                    result => Ok(result?),
+                }
             }
             Self::Clipboard => {
                 let mut child = Command::new("wl-copy")
