@@ -88,6 +88,17 @@ fn main() -> Result<()> {
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
 
     let args = Args::parse();
+    let notifications_enabled = !args.no_notify;
+    // Shortcut launchers discard stderr, so a failure would otherwise be
+    // silent.
+    run(args).inspect_err(|error| {
+        if notifications_enabled {
+            notify(&format!("Screenshot failed: {error:#}"));
+        }
+    })
+}
+
+fn run(args: Args) -> Result<()> {
     let Some(capture_lock) = try_acquire_capture_lock()? else {
         info!("another latchshot capture is already in progress; exiting");
 
