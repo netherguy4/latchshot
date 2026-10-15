@@ -319,6 +319,7 @@ fn window_geometry(
     Some(Window {
         geometry,
         identifier: Some(window.id.to_string()),
+        focused: window.is_focused,
     })
 }
 
@@ -645,6 +646,7 @@ mod tests {
         IpcWindow {
             id,
             workspace_id: Some(1),
+            is_focused: false,
             is_floating: false,
             layout: super::super::ipc::WindowLayout {
                 pos_in_scrolling_layout: Some((column, 1)),
@@ -725,10 +727,12 @@ mod tests {
                 Window {
                     geometry: Rect::new(100.0, 252.0, 318.0, 396.0),
                     identifier: Some("1".into()),
+                    focused: false,
                 },
                 Window {
                     geometry: Rect::new(434.0, 252.0, 446.0, 396.0),
                     identifier: Some("2".into()),
+                    focused: false,
                 },
             ]
         );
@@ -767,10 +771,12 @@ mod tests {
                 Window {
                     geometry: Rect::new(102.0, 252.0, 446.0, 396.0),
                     identifier: Some("1".into()),
+                    focused: false,
                 },
                 Window {
                     geometry: Rect::new(552.0, 252.0, 448.0, 396.0),
                     identifier: Some("2".into()),
+                    focused: false,
                 },
             ]
         );
@@ -805,6 +811,7 @@ mod tests {
                 // Window 1 is the ambiguous edge fragment; the fully visible
                 // second column must retain window 2's capture identifier.
                 identifier: Some("2".into()),
+                focused: false,
             }]
         );
     }
@@ -852,6 +859,7 @@ mod tests {
             vec![Window {
                 geometry: Rect::new(108.0, 246.28571428571428, 2853.0 / 1.75, 1706.0 / 1.75,),
                 identifier: Some("1".into()),
+                focused: false,
             }]
         );
     }
@@ -880,10 +888,12 @@ mod tests {
                 Window {
                     geometry: Rect::new(402.0, 322.0, 196.0, 96.0),
                     identifier: Some("2".into()),
+                    focused: false,
                 },
                 Window {
                     geometry: Rect::new(102.0, 202.0, 796.0, 496.0),
                     identifier: Some("1".into()),
+                    focused: false,
                 },
             ]
         );

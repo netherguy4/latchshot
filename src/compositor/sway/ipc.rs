@@ -49,6 +49,8 @@ pub(super) struct Node {
     pub(super) foreign_toplevel_identifier: Option<String>,
     pub(super) rect: Geometry,
     pub(super) visible: Option<bool>,
+    #[serde(default)]
+    pub(super) focused: bool,
     pub(super) nodes: Vec<Self>,
     pub(super) floating_nodes: Vec<Self>,
 }

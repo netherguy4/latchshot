@@ -40,6 +40,7 @@ impl Node {
         if self.visible == Some(true) {
             windows.push(Window {
                 identifier: self.foreign_toplevel_identifier,
+                focused: self.focused,
                 geometry: Rect::new(
                     f64::from(self.rect.x),
                     f64::from(self.rect.y),

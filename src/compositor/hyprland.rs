@@ -59,6 +59,7 @@ impl SceneReader for Hyprland {
             })
             .map(|client| Window {
                 identifier: client.stable_id,
+                focused: client.focus_history_id == Some(0),
                 geometry: Rect::new(
                     f64::from(client.at[0]),
                     f64::from(client.at[1]),

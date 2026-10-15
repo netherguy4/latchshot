@@ -146,6 +146,7 @@ impl SceneReader for Niri {
                     Some(Window {
                         geometry,
                         identifier: Some(window.id.to_string()),
+                        focused: window.is_focused,
                     })
                 })
                 .collect()

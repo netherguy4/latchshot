@@ -47,6 +47,9 @@ pub(super) struct Monitor {
 pub(super) struct Client {
     #[serde(rename = "stableId")]
     pub(super) stable_id: Option<String>,
+    /// Zero for the focused window.
+    #[serde(rename = "focusHistoryID")]
+    pub(super) focus_history_id: Option<i64>,
     pub(super) hidden: bool,
     pub(super) visible: Option<bool>,
     pub(super) at: [i32; 2],

@@ -196,6 +196,7 @@ mod tests {
         Window {
             geometry,
             identifier: None,
+            focused: false,
         }
     }
 

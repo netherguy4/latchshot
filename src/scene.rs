@@ -55,6 +55,9 @@ pub struct Window {
     /// Stable compositor identifier used for native toplevel capture.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub identifier: Option<String>,
+    /// Whether the window has keyboard focus.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub focused: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize)]

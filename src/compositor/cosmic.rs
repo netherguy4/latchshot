@@ -157,7 +157,6 @@ impl ToplevelInfo {
 
 struct Candidate {
     window: Window,
-    activated: bool,
     fullscreen: bool,
     sticky: bool,
 }
@@ -184,8 +183,10 @@ fn candidate(
                 f64::from(height),
             ),
             identifier: info.identifier.clone(),
+            // cosmic-comp activates the keyboard-focused window of each seat;
+            // with several seats the protocol cannot tell them apart.
+            focused: info.has(ToplevelState::Activated),
         },
-        activated: info.has(ToplevelState::Activated),
         fullscreen: info.has(ToplevelState::Fullscreen),
         sticky,
     })
@@ -201,9 +202,9 @@ fn stack(mut candidates: Vec<Candidate>) -> Vec<Window> {
     candidates.sort_by(|a, b| {
         let rank = |c: &Candidate| {
             (
-                c.activated && c.fullscreen,
+                c.window.focused && c.fullscreen,
                 c.sticky,
-                c.activated,
+                c.window.focused,
                 c.fullscreen,
             )
         };
@@ -501,7 +502,7 @@ mod tests {
             Rect::new(1930.0, -20.0, 300.0, 200.0)
         );
         assert_eq!(candidate.window.identifier.as_deref(), Some("toplevel"));
-        assert!(candidate.activated);
+        assert!(candidate.window.focused);
     }
 
     #[test]
@@ -527,13 +528,13 @@ mod tests {
         assert!(candidate(&info(&[ToplevelState::Sticky]), false, (0, 0)).is_some());
     }
 
-    fn window(name: &str, size: f64, activated: bool, fullscreen: bool) -> Candidate {
+    fn window(name: &str, size: f64, focused: bool, fullscreen: bool) -> Candidate {
         Candidate {
             window: Window {
                 geometry: Rect::new(0.0, 0.0, size, size),
                 identifier: Some(name.to_owned()),
+                focused,
             },
-            activated,
             fullscreen,
             sticky: false,
         }

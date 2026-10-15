@@ -120,6 +120,8 @@ pub(super) struct Window {
     pub(super) id: u64,
     pub(super) workspace_id: Option<u64>,
     #[serde(default)]
+    pub(super) is_focused: bool,
+    #[serde(default)]
     pub(super) is_floating: bool,
     #[serde(default)]
     pub(super) layout: WindowLayout,
