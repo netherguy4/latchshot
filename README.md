@@ -25,11 +25,15 @@ Latchshot targets compositors that expose the Wayland protocols needed by its cu
 | [Sway](https://github.com/swaywm/sway) | Supported | Window snapping and free-form regions |
 | [Hyprland](https://github.com/hyprwm/Hyprland) | Supported | Window snapping and free-form regions |
 | [Mango](https://github.com/mangowm/mango) | Supported | Window snapping and free-form regions |
+| [COSMIC](https://github.com/pop-os/cosmic-comp) | Supported | Window snapping and free-form regions |
 | Other compatible Wayland compositors | Best effort | Free-form regions only |
 | KDE Plasma | Intentionally unsupported | — |
 | GNOME | Intentionally unsupported | — |
 
 The `generic` backend is selected automatically for unknown compositors.
+
+COSMIC exposes window geometry and workspace visibility but no stacking order,
+so overlapping unfocused floating windows are ordered by size, smaller in front.
 
 When upstream Niri rejects the custom `WindowGeometries` request, Latchshot reconstructs visible window positions from standard Niri IPC layout metadata and the frozen output pixels. **If an output cannot be resolved unambiguously, window snapping is disabled for that output rather than guessing.**
 
@@ -210,7 +214,7 @@ Latchshot can also be used as a Rust library. See the [API documentation on docs
 
 ## AI Usage Disclosure
 
-GPT 5.6-Sol was used to generate compositor adapters for Hyprland, Sway and MangoWM, which I do not use. Doc comments and tests are generated under my guidance.
+GPT 5.6-Sol was used to generate compositor adapters for Hyprland, Sway and MangoWM, which I do not use. The COSMIC adapter was contributed by [@netherguy4](https://github.com/netherguy4) and generated with Claude Opus 5.5. Doc comments and tests are generated under my guidance.
 
 ## License
 

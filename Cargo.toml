@@ -18,7 +18,9 @@ serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.149"
 smithay-client-toolkit = { version = "0.21.1", default-features = false, features = ["xkbcommon"] }
 wayland-client = "0.31.15"
-wayland-protocols = { version = "0.32.13", features = ["client"] }
+# "staging" provides ext-foreign-toplevel-list and ext-workspace for COSMIC.
+wayland-protocols = { version = "0.32.13", features = ["client", "staging"] }
+wayland-scanner = "0.31.11"
 
 [profile.release]
 codegen-units = 1

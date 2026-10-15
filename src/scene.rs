@@ -60,6 +60,7 @@ pub struct Window {
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct Scene {
     pub outputs: Vec<Output>,
-    /// Visible windows ordered from front to back.
+    /// Visible windows ordered from front to back. Backends whose compositor
+    /// exposes no stacking order, such as COSMIC, approximate it.
     pub windows: Vec<Window>,
 }

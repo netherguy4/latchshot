@@ -11,6 +11,7 @@ use log::debug;
 
 use crate::{DesktopFrame, Scene, WindowCapture};
 
+mod cosmic;
 mod generic;
 mod hyprland;
 mod ipc;
@@ -41,6 +42,7 @@ pub enum Compositor {
     Sway,
     Hyprland,
     Mango,
+    Cosmic,
     Generic,
 }
 
@@ -52,7 +54,7 @@ impl Compositor {
             Self::Sway => Some("SWAYSOCK"),
             Self::Hyprland => Some("HYPRLAND_INSTANCE_SIGNATURE"),
             Self::Mango => Some("MANGO_INSTANCE_SIGNATURE"),
-            Self::Generic => None,
+            Self::Cosmic | Self::Generic => None,
         }
     }
 
@@ -85,6 +87,7 @@ impl Compositor {
             Self::Sway => Ok(Box::new(sway::Sway::connect()?)),
             Self::Hyprland => Ok(Box::new(hyprland::Hyprland::connect()?)),
             Self::Mango => Ok(Box::new(mango::Mango::connect()?)),
+            Self::Cosmic => Ok(Box::new(cosmic::Cosmic::connect()?)),
             Self::Generic => {
                 debug!("using generic Wayland scene discovery");
                 Ok(Box::new(generic::Generic::connect()?))
@@ -97,7 +100,7 @@ impl Compositor {
     pub fn window_capturer(self) -> Option<Box<dyn WindowCapture>> {
         match self {
             Self::Niri => Some(Box::new(niri::NiriWindowCapture)),
-            Self::Sway | Self::Hyprland | Self::Mango | Self::Generic => None,
+            Self::Sway | Self::Hyprland | Self::Mango | Self::Cosmic | Self::Generic => None,
         }
     }
 }

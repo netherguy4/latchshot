@@ -731,6 +731,7 @@ dependencies = [
  "smithay-client-toolkit",
  "wayland-client",
  "wayland-protocols",
+ "wayland-scanner",
 ]
 
 [[package]]
