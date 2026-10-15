@@ -139,6 +139,13 @@ During selection:
 - Press <kbd>F</kbd> to capture the output under the pointer.
 - Press <kbd>Esc</kbd> or right-click to cancel.
 
+Capture without the overlay, for example from a keyboard shortcut:
+
+```sh
+latchshot --active-window   # the focused window (not with the generic backend)
+latchshot --all-outputs     # every output as one image
+```
+
 Save directly to a file:
 
 ```sh
